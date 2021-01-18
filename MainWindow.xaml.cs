@@ -239,7 +239,14 @@ namespace DriveSpaceAnalyzer_2
         {
             if (results.SelectedCells.Count > 0)
             {
-                Clipboard.SetText(((ResultEntry)results.SelectedCells[0].Item).Path);
+                try
+                {
+                    Clipboard.SetText(((ResultEntry)results.SelectedCells[0].Item).Path);
+                }
+                catch (Exception ex)
+                {
+                    //no need for handling here, just silently fail if results were cleared, etc
+                }
             }
         }
 
@@ -247,6 +254,11 @@ namespace DriveSpaceAnalyzer_2
         {
             e.Handled = true;
             btnCalculate_Click(sender, e);
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            results.Items.Clear();
         }
     }
 }
